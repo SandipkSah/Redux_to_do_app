@@ -23,11 +23,10 @@ const TodoList = () => {
                 Complete Status
               </th>
               <th scope="col" className="m-auto ">
-                {" "}
                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp;title
+                &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                title
               </th>
-              {/* <th scope="col">Destination </th> */}
             </tr>
           </thead>
         </table>

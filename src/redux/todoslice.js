@@ -29,13 +29,16 @@ export const addTodoAsync = createAsyncThunk(
 export const toggleCompleteAsync = createAsyncThunk(
   "todos/completeTodoAsync",
   async (payload) => {
-    const response = await fetch(`https://usingreduxtodo.herokuapp.com/todos/${payload.id}`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ completed: payload.completed }),
-    });
+    const response = await fetch(
+      `https://usingreduxtodo.herokuapp.com/todos/${payload.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ completed: payload.completed }),
+      }
+    );
     if (response.ok) {
       const todo = await response.json();
       return { id: todo.id, completed: todo.completed };
@@ -43,28 +46,25 @@ export const toggleCompleteAsync = createAsyncThunk(
   }
 );
 
-
 export const deleteTodoAsync = createAsyncThunk(
-	'todos/deleteTodoAsync',
-	async (payload) => {
-		const resp = await fetch(`https://usingreduxtodo.herokuapp.com/todos/${payload.id}`, {
-			method: 'DELETE',
-		});
+  "todos/deleteTodoAsync",
+  async (payload) => {
+    const resp = await fetch(
+      `https://usingreduxtodo.herokuapp.com/todos/${payload.id}`,
+      {
+        method: "DELETE",
+      }
+    );
 
-		if (resp.ok) {
-			return { id: payload.id };
-		}
-	}
+    if (resp.ok) {
+      return { id: payload.id };
+    }
+  }
 );
-
 
 const todoSlice = createSlice({
   name: "todos",
-  initialState: [
-    { id: 1, title: "todo1", completed: false },
-    { id: 2, title: "todo2", completed: false },
-    { id: 3, title: "todo3", completed: true },
-  ],
+  initialState: [],
   reducers: {
     addTodo: (state, action) => {
       const newTodo = {
@@ -74,13 +74,13 @@ const todoSlice = createSlice({
       };
       state.push(newTodo);
     },
-    toggleComplete: (state, action) => {
-      const index = state.findIndex((todo) => todo.id === action.payload.id);
-      state[index].completed = action.payload.completed;
-    },
-    deleteTodo: (state, action) => {
-      return state.filter((todo) => todo.id !== action.payload.id);
-    },
+    // toggleComplete: (state, action) => {
+    //   const index = state.findIndex((todo) => todo.id === action.payload.id);
+    //   state[index].completed = action.payload.completed;
+    // },
+    // deleteTodo: (state, action) => {
+    //   return state.filter((todo) => todo.id !== action.payload.id);
+    // },
   },
   extraReducers: {
     [getTodoAsync.pending]: (state, action) => {
@@ -98,17 +98,17 @@ const todoSlice = createSlice({
       state[index].completed = action.payload.completed;
     },
     // [toggleCompleteAsync.fulfilled]: (state, action) => {
-		// 	const index = state.findIndex(
-		// 		(todo) => todo.id === action.payload.todo.id
-		// 	);
-		// 	state[index].completed = action.payload.todo.completed;
-		// },
+    // 	const index = state.findIndex(
+    // 		(todo) => todo.id === action.payload.todo.id
+    // 	);
+    // 	state[index].completed = action.payload.todo.completed;
+    // },
     // [deleteTodoAsync.fulfilled]: (state, action) => {
     //   return state.filter((todo) => todo.id !== action.payload.id);
     // },
     [deleteTodoAsync.fulfilled]: (state, action) => {
-			return state.filter((todo) => todo.id !== action.payload.id);
-		},
+      return state.filter((todo) => todo.id !== action.payload.id);
+    },
   },
 });
 export const { addTodo, toggleComplete, deleteTodo } = todoSlice.actions;
