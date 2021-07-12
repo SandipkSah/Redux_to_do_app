@@ -87,7 +87,7 @@ const todoSlice = createSlice({
       console.log("fetching data------");
     },
     [getTodoAsync.fulfilled]: (state, action) => {
-      console.log("fetched data------");
+      // console.log("fetched data------");
       return action.payload.todos;
     },
     [addTodoAsync.fulfilled]: (state, action) => {
